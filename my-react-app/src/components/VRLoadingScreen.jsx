@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "components/ui/button";
 
-interface VRLoadingScreenProps {
-  onComplete: () => void;
-}
-
-const VRLoadingScreen = ({ onComplete }: VRLoadingScreenProps) => {
+const VRLoadingScreen = ({ onComplete }) => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
