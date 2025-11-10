@@ -1,4 +1,4 @@
-import './DesktopScene.css';
+import './styles/DesktopScene.css';
 
 const DesktopScene = () => {
   return (

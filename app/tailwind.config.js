@@ -93,7 +93,7 @@ module.exports = {
             opacity: "1"
           },
           "100%": {
-            transform: "scale(0.42) translateY(8vh)",
+            transform: "scale(0.25) translateY(120vh)",
             opacity: "1"
           }
         },

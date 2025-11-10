@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "components/ui/button";
-import './VRLoadingScreen.css';
+import './styles/VRLoadingScreen.css';
 
 const VRLoadingScreen = ({ onComplete }) => {
   const [loadingProgress, setLoadingProgress] = useState(0);
