@@ -17,13 +17,7 @@ const Index = () => {
             </div>
 
             {/* Section 1: VR Loading Screen (zooms out to become monitor screen) */}
-            <div
-                className={`fixed inset-0 z-20 transition-all duration-[2000ms] ease-in-out ${
-                    showDesktop ? "animate-zoom-out pointer-events-none" : ""
-                }`}
-            >
-                <VRLoadingScreen onComplete={handleComplete} />
-            </div>
+
         </div>
     );
 };

@@ -8,6 +8,54 @@
   background-color: hsl(var(--background));
 }
 
+.vr-loading-screen--embedded {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+}
+
+.vr-loading-screen--embedded .central-glow {
+  width: clamp(220px, 40vw, 420px);
+  height: clamp(220px, 40vw, 420px);
+}
+
+.vr-loading-screen--embedded .loading-content {
+  padding: 0;
+}
+
+.vr-loading-screen--embedded .loading-ring-container {
+  margin-bottom: 1.5rem;
+  transform: scale(0.75);
+}
+
+.vr-loading-screen--embedded .status-title {
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  margin-bottom: 0.75rem;
+}
+
+.vr-loading-screen--embedded .loading-bar-container {
+  max-width: 18rem;
+  height: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.vr-loading-screen--embedded .percentage-text {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.vr-loading-screen--embedded .welcome-modal {
+  padding: 2rem;
+  max-width: 22rem;
+}
+
+.vr-loading-screen--embedded .hud-element {
+  font-size: 0.65rem;
+}
+
 .vr-grid-background {
   position: absolute;
   inset: 0;

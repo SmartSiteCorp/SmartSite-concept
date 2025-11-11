@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import { Button } from "components/ui/button";
-import './styles/VRLoadingScreen.css';
+import "./styles/VRLoadingScreen.css";
 
-const VRLoadingScreen = ({ onComplete }) => {
+const VRLoadingScreen = ({ onComplete, variant = "standalone" }) => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
+
+  const rootClassName = [
+    "vr-loading-screen",
+    variant === "embedded" ? "vr-loading-screen--embedded" : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,7 +31,7 @@ const VRLoadingScreen = ({ onComplete }) => {
   }, []);
 
   return (
-    <div className="vr-loading-screen">
+    <div className={rootClassName}>
       {/* VR Grid Background */}
       <div className="vr-grid-background">
         <div className="vr-grid-horizontal" />
