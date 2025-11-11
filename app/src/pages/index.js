@@ -1,6 +1,7 @@
 import { useState } from "react";
 import VRLoadingScreen from "components/VRLoadingScreen";
 import DesktopScene from "components/DesktopScene";
+import Domain from "components/Domain";
 
 const Index = () => {
     const [showDesktop, setShowDesktop] = useState(false);
@@ -10,14 +11,16 @@ const Index = () => {
     };
 
     return (
-        <div className="relative w-full min-h-screen overflow-hidden">
-            {/* Section 2: Desktop Scene (always visible) */}
+        <div className="relative w-full overflow-x-hidden">
+            {/* Section 1: Desktop Scene (fixed, première section) */}
             <div className="fixed inset-0 z-10">
                 <DesktopScene />
             </div>
 
-            {/* Section 1: VR Loading Screen (zooms out to become monitor screen) */}
-
+            {/* Section 2: Domain (apparaît après le scroll) */}
+            <div className="relative z-20" style={{ marginTop: '100vh' }}>
+                <Domain />
+            </div>
         </div>
     );
 };
