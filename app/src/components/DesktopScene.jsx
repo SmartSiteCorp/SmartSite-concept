@@ -1,6 +1,10 @@
 import { useState } from "react";
 import VRLoadingScreen from "./VRLoadingScreen";
 import "./styles/DesktopScene.css";
+import rockImage from "../assets/desktop/rock.png";
+import building1Image from "../assets/desktop/buliding1.png";
+import buildingbackImage from "../assets/desktop/buildingback.png";
+import "./styles/fonts.css"
 
 const DesktopScene = () => {
   const [isZoomedIn, setIsZoomedIn] = useState(true);
@@ -19,8 +23,8 @@ const DesktopScene = () => {
         isZoomedIn ? "is-zoomed-in" : "is-zoomed-out"
       }`}
     >
-      {/* Desktop Scene - en dessous */}
-      <div className="scene-wrapper">
+      <h1 className="smartsite">SMARTSITE</h1>
+            <div className="scene-wrapper">
         {/* Desk Surface */}
         <div className="desk-surface">
           {/* Computer Monitor */}
@@ -51,6 +55,19 @@ const DesktopScene = () => {
           </div>
         </div>
       </div>
+      {/* Ground Rectangle */}
+      <div className="ground-rectangle" />
+
+      {/* Rock Asset */}
+      <img src={rockImage} alt="Rock" className="rock-asset" />
+
+      {/* Building 1 Asset */}
+      <img src={building1Image} alt="Building" className="building1-asset" />
+
+      {/* Building Back Asset */}
+      <img src={buildingbackImage} alt="Building Background" className="buildingback-asset" />
+
+
 
       {/* VR Loading Screen - au-dessus en plein écran */}
       {showVRLoading && (
