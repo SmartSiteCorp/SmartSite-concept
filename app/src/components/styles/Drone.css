@@ -1,0 +1,32 @@
+.drone-container {
+  position: fixed;
+  width: 450px;
+  height: 300px;
+  z-index: 50;
+  pointer-events: none;
+  overflow: visible;
+  /* Le mouvement est géré par JavaScript avec transform */
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Animation de flottement */
+@keyframes drone-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.drone-container {
+  animation: drone-float 3s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .drone-container {
+    width: 150px;
+    height: 150px;
+  }
+}

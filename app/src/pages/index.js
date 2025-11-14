@@ -2,6 +2,7 @@ import { useState } from "react";
 import VRLoadingScreen from "components/VRLoadingScreen";
 import DesktopScene from "components/DesktopScene";
 import Domain from "components/Domain";
+import Drone from "components/Drone";
 
 const Index = () => {
     const [showDesktop, setShowDesktop] = useState(false);
@@ -12,6 +13,9 @@ const Index = () => {
 
     return (
         <div className="relative w-full overflow-x-hidden">
+            {/* Drone flottant */}
+            <Drone />
+            
             {/* Section 1: Desktop Scene (fixed, première section) */}
             <div className="fixed inset-0 z-10">
                 <DesktopScene />

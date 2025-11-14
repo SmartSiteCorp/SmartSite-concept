@@ -2,11 +2,11 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: #fff1eb;
+  background: #4b231d;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: 2rem 1rem;
   z-index: 20;
 }
 
@@ -16,24 +16,77 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
-}
-
-.domain-title {
-  font-size: 3rem;
-  font-weight: 700;
-  color: hsl(var(--foreground));
-  text-align: center;
-  margin-bottom: 2rem;
+  gap: 2rem;
 }
 
 .domain-canvas-wrapper {
   width: 100%;
-  height: 600px;
-  background: #121212;
+  height: 500px;
+  background: #f3f3f3;
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(173, 173, 173, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.888);
+}
+
+/* Styles pour les textes animés */
+.animated-text-container {
+  pointer-events: none;
+  user-select: none;
+}
+
+.animated-button {
+  position: relative;
+  border: none;
+  background: transparent;
+  --stroke-color: #bc3627;
+  --ani-color: rgba(95, 3, 244, 0);
+  --color-gar: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  letter-spacing: 3px;
+  font-size: 1.5em;
+  font-family: "Arial", sans-serif;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--stroke-color);
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+}
+
+.actual-text {
+  display: inline-block;
+}
+
+.front-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  background: var(--color-gar);
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 200%;
+  overflow: hidden;
+  transition: all 1s;
+  animation: 8s ani infinite;
+  border-bottom: 2px solid transparent;
+}
+
+.animated-button.hovered .front-text {
+  width: 100%;
+  border-bottom: 2.5px solid #b1cd9d;
+  -webkit-text-stroke: 1px var(--ani-color);
+}
+
+@keyframes ani {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 400%;
+  }
+  100% {
+    background-position: 0%;
+  }
 }
 
 /* Responsive */
@@ -45,5 +98,16 @@
   .domain-canvas-wrapper {
     height: 400px;
   }
+
+  .animated-button {
+    font-size: 1em;
+    letter-spacing: 2px;
+  }
 }
 
+@media (max-width: 480px) {
+  .animated-button {
+    font-size: 0.8em;
+    letter-spacing: 1px;
+  }
+}
