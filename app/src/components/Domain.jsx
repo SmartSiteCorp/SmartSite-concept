@@ -13,12 +13,17 @@ import phoneModel from '../assets/3d/phone.glb';
 
 // Composant pour le texte animé
 function AnimatedText({ text, isHovered }) {
+  // Séparer le texte en lignes
+  const lines = text.split('<br/>');
+  
   return (
     <div className="animated-text-container">
-      <div className={`animated-button ${isHovered ? 'hovered' : ''}`}>
-        <span className="actual-text">&nbsp;{text}&nbsp;</span>
-        <span aria-hidden="true" className="front-text">&nbsp;{text}&nbsp;</span>
-      </div>
+      {lines.map((line, index) => (
+        <div key={index} className={`animated-button ${isHovered ? 'hovered' : ''}`}>
+          <span className="actual-text">&nbsp;{line}&nbsp;</span>
+          <span aria-hidden="true" className="front-text">&nbsp;{line}&nbsp;</span>
+        </div>
+      ))}
     </div>
   );
 }
@@ -150,13 +155,13 @@ function Scene3D() {
         <HoverRectangle 
           position={[-12.5, -7, -1]} 
           size={[8, 17.5]}
-          text="Intelligence Artificielle"
-          textPosition={[-12.5, 3.5, 0]}
+          text="Intelligence<br/>Artificielle"
+          textPosition={[-12.5, 3, 0]}
           onHoverChange={(hovered) => setHoveredObjects(prev => ({ ...prev, android: hovered }))}
         />
         <RotatingGLBModel 
           modelPath={androidModel} 
-          position={[-12, -7, 0]} 
+          position={[-12, -7.5, 0]} 
           scale={[14.5, 14.5, 14.5]}
           isHovered={hoveredObjects.android}
         />
@@ -165,8 +170,8 @@ function Scene3D() {
         <HoverRectangle 
           position={[0, -6, -1]} 
           size={[8, 12]}
-          text="Réalité Augmentée"
-          textPosition={[0, 3.5, 0]}
+          text="Réalité<br/>Augmentée"
+          textPosition={[0, 3, 0]}
           onHoverChange={(hovered) => setHoveredObjects(prev => ({ ...prev, building: hovered }))}
         />
         <RotatingGLBModel 
@@ -180,8 +185,8 @@ function Scene3D() {
         <HoverRectangle 
           position={[12.5, -4, -1]} 
           size={[8, 5]}
-          text="Développement Web & Mobile"
-          textPosition={[12.5, 3.5, 0]}
+          text="Développement<br/>Web & Mobile"
+          textPosition={[12.5, 3, 0]}
           onHoverChange={(hovered) => setHoveredObjects(prev => ({ ...prev, phone: hovered }))}
         />
         <RotatingGLBModel 

@@ -95,8 +95,8 @@ const Drone = () => {
 
   // Position 1 (en haut) : top: 20px, right: 10rem
   // Position 2 (en bas) : calculée avec les offsets
-  const position1 = { top: -10, right: 10 }; // 10rem ≈ 160px
-  const position2 = { top:-30, right: 700 }; // 400px vers la gauche + 200px vers le bas
+  const position1 = { top: -10, right: 10 }; 
+  const position2 = { top:-40, right: 710 }; 
 
   const currentTop = position1.top + (position2.top - position1.top) * scrollProgress;
   const currentRight = position1.right + (position2.right - position1.right) * scrollProgress;
