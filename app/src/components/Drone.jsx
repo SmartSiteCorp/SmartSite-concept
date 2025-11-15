@@ -32,7 +32,7 @@ function AnimatedDrone() {
   );
 }
 
-const Drone = () => {
+const Drone = ({ isVisible = true }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const droneContainerRef = useRef(null);
@@ -125,28 +125,35 @@ const Drone = () => {
   return (
     <>
       {/* Debug indicator - à retirer en production */}
-      <div style={{
-        position: 'fixed',
-        top: '10px',
-        left: '10px',
-        background: 'rgba(0,0,0,0.7)',
-        color: 'white',
-        padding: '10px',
-        zIndex: 9999,
-        fontSize: '12px',
-        fontFamily: 'monospace'
-      }}>
-        Progress: {(scrollProgress * 100).toFixed(1)}%
-      </div>
+      {isVisible && (
+        <div style={{
+          position: 'fixed',
+          top: '10px',
+          left: '10px',
+          background: 'rgba(0,0,0,0.7)',
+          color: 'white',
+          padding: '10px',
+          zIndex: 9999,
+          fontSize: '12px',
+          fontFamily: 'monospace',
+          opacity: isVisible ? 1 : 0,
+          transition: 'opacity 0.8s ease'
+        }}>
+          Progress: {(scrollProgress * 100).toFixed(1)}%
+        </div>
+      )}
       <div
         ref={droneContainerRef}
         className="drone-container"
         style={{
           top: `${currentTop}px`,
           right: `${currentRight}px`,
-          opacity: 1,
+          opacity: isVisible ? 1 : 0,
           transform: `scale(${currentScale})`,
           transformOrigin: 'center center',
+          filter: isVisible ? 'blur(0px)' : 'blur(12px)',
+          transition: 'opacity 1s ease, filter 1s ease',
+          pointerEvents: isVisible ? 'auto' : 'none',
         }}
       >
         <Canvas
