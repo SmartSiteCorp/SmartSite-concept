@@ -37,80 +37,113 @@ const Drone = () => {
   const droneContainerRef = useRef(null);
 
   useEffect(() => {
-    let ticking = false;
-
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const domainSection = document.querySelector('.domain-section');
-          if (!domainSection) {
-            ticking = false;
-            return;
-          }
+      // Obtenir la position actuelle du scroll
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || window.pageYOffset || 0;
+      const windowHeight = window.innerHeight || 0;
+      const documentHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+        document.documentElement.offsetHeight,
+        document.body.offsetHeight
+      );
+      
+      // Structure de la page :
+      // - Section 1 (DesktopScene) : fixed, occupe 0vh à 100vh (première viewport)
+      // - Section 2 (Domain) : relative avec marginTop: 100vh, occupe 100vh à 200vh (deuxième viewport)
+      // Le drone doit se déplacer pendant la transition entre les deux sections
+      // Animation commence à 0vh (début de la page) et se termine à la fin de la section 2
+      const startScroll = 0; // Début de la page
+      // Utiliser la hauteur réelle du document ou 200vh, selon ce qui est le plus petit
+      const endScroll = Math.min(windowHeight * 2, documentHeight - windowHeight);
 
-          // Obtenir la position de la section Domain
-          const domainSectionTop = domainSection.offsetTop;
-          
-          // Obtenir la position actuelle du scroll
-          const scrollTop = window.scrollY || document.documentElement.scrollTop;
-          const windowHeight = window.innerHeight;
-
-          // Calculer la distance avant d'atteindre la section Domain
-          // On commence l'animation 1200px avant la section pour un mouvement très progressif
-          const startAnimation = Math.max(0, domainSectionTop - windowHeight - 1200);
-          const endAnimation = domainSectionTop - 200;
-
-          // Calculer la progression (0 = position initiale, 1 = position finale)
-          let progress = 0;
-          if (scrollTop < startAnimation) {
-            progress = 0;
-          } else if (scrollTop > endAnimation) {
-            progress = 1;
-          } else {
-            progress = (scrollTop - startAnimation) / (endAnimation - startAnimation);
-          }
-
-          setScrollProgress(progress);
-          ticking = false;
-        });
-
-        ticking = true;
+      // Calculer la progression (0 = position initiale en haut à droite, 1 = position finale en bas à gauche)
+      let progress = 0;
+      if (windowHeight > 0 && endScroll > startScroll) {
+        if (scrollTop <= startScroll) {
+          progress = 0;
+        } else if (scrollTop >= endScroll) {
+          progress = 1;
+        } else {
+          const scrollRange = endScroll - startScroll;
+          progress = scrollRange > 0 ? scrollTop / scrollRange : 0;
+          // S'assurer que progress est entre 0 et 1
+          progress = Math.max(0, Math.min(1, progress));
+        }
       }
+
+      // Debug: afficher la progression dans la console
+      console.log('Scroll Progress:', progress.toFixed(3), 'ScrollTop:', scrollTop.toFixed(1), 'WindowHeight:', windowHeight, 'DocumentHeight:', documentHeight, 'Start:', startScroll, 'End:', endScroll.toFixed(1));
+
+      setScrollProgress(progress);
     };
 
-    // Écouter le scroll
+    // Écouter le scroll sur window
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Appeler une fois au chargement
+    // Appeler une fois au chargement avec un petit délai pour s'assurer que le DOM est prêt
+    setTimeout(handleScroll, 100);
     handleScroll();
+
+    // Écouter les changements de taille de fenêtre
+    window.addEventListener('resize', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
+  // Position 1 (en haut) : top: 20px, right: 10rem
+  // Position 2 (en bas) : calculée avec les offsets
+  const position1 = { top: -10, right: 10 }; // 10rem ≈ 160px
+  const position2 = { top:-30, right: 700 }; // 400px vers la gauche + 200px vers le bas
+
+  const currentTop = position1.top + (position2.top - position1.top) * scrollProgress;
+  const currentRight = position1.right + (position2.right - position1.right) * scrollProgress;
+  
+  // Calculer le scale : de 1 (taille normale) à 1.4 (40% plus grand)
+  const minScale = 1;
+  const maxScale = 1.4;
+  const currentScale = minScale + (maxScale - minScale) * scrollProgress;
+
   return (
-    <div
-      ref={droneContainerRef}
-      className="drone-container"
-      style={{
-        // Position de départ fixe
-        top: '20px',
-        right: '10rem',
-        // Transformation pour créer le mouvement diagonal
-        transform: `translate(${scrollProgress * -400}px, ${scrollProgress * 200}px)`,
-        opacity: 1,
-      }}
-    >
-      <Canvas
-        camera={{ position: [0, 0, 8], fov: 60, near: 0.1, far: 100 }}
-        style={{ width: '100%', height: '100%' }}
+    <>
+      {/* Debug indicator - à retirer en production */}
+      <div style={{
+        position: 'fixed',
+        top: '10px',
+        left: '10px',
+        background: 'rgba(0,0,0,0.7)',
+        color: 'white',
+        padding: '10px',
+        zIndex: 9999,
+        fontSize: '12px',
+        fontFamily: 'monospace'
+      }}>
+        Progress: {(scrollProgress * 100).toFixed(1)}%
+      </div>
+      <div
+        ref={droneContainerRef}
+        className="drone-container"
+        style={{
+          top: `${currentTop}px`,
+          right: `${currentRight}px`,
+          opacity: 1,
+          transform: `scale(${currentScale})`,
+          transformOrigin: 'center center',
+        }}
       >
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
-        <pointLight position={[-5, -5, -5]} intensity={0.5} />
-        <AnimatedDrone />
-      </Canvas>
-    </div>
+        <Canvas
+          camera={{ position: [0, 0, 8], fov: 60, near: 0.1, far: 100 }}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <ambientLight intensity={0.8} />
+          <directionalLight position={[5, 5, 5]} intensity={1} />
+          <pointLight position={[-5, -5, -5]} intensity={0.5} />
+          <AnimatedDrone />
+        </Canvas>
+      </div>
+    </>
   );
 };
 
