@@ -99,24 +99,12 @@
   height: 100%;
   z-index: 1000;
   pointer-events: auto;
-}
-
-.vr-loading-overlay::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000000;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  z-index: 1001;
-  pointer-events: none;
-}
-
-.vr-loading-overlay--fade-out::after {
   opacity: 1;
+  transition: opacity 0.9s ease-in-out;
+}
+
+.vr-loading-overlay--fade-out {
+  opacity: 0;
   pointer-events: none;
 }
 
