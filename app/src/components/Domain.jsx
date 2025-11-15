@@ -5,6 +5,7 @@ import { useFBX } from '@react-three/drei';
 import * as THREE from 'three';
 import './styles/Domain.css';
 import './styles/fonts.css';
+import ColorBends from './ColorBends';
 
 // Importer les modèles 3D depuis src/assets/3d
 import androidModel from '../assets/3d/android.glb';
@@ -211,6 +212,23 @@ function Scene3D() {
 const Domain = () => {
   return (
     <section className="domain-section">
+      {/* Background ColorBends */}
+      <div className="domain-background">
+        <ColorBends
+          colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
+          rotation={30}
+          speed={0.3}
+          scale={1.2}
+          frequency={1.4}
+          warpStrength={1.2}
+          mouseInfluence={0.8}
+          parallax={0.6}
+          noise={0.08}
+          transparent
+        />
+      </div>
+
+      {/* Contenu principal */}
       <div className="domain-container">
         <h2 className="domain-title">NOS DOMAINES</h2>
         <div className="domain-canvas-wrapper">
