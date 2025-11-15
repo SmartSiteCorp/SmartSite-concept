@@ -34,6 +34,7 @@ function AnimatedDrone() {
 
 const Drone = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const droneContainerRef = useRef(null);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const Drone = () => {
         document.documentElement.offsetHeight,
         document.body.offsetHeight
       );
-      
+
       // Structure de la page :
       // - Section 1 (DesktopScene) : fixed, occupe 0vh à 100vh (première viewport)
       // - Section 2 (Domain) : relative avec marginTop: 100vh, occupe 100vh à 200vh (deuxième viewport)
@@ -78,6 +79,11 @@ const Drone = () => {
       setScrollProgress(progress);
     };
 
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      handleScroll();
+    };
+
     // Écouter le scroll sur window
     window.addEventListener('scroll', handleScroll, { passive: true });
     // Appeler une fois au chargement avec un petit délai pour s'assurer que le DOM est prêt
@@ -85,18 +91,28 @@ const Drone = () => {
     handleScroll();
 
     // Écouter les changements de taille de fenêtre
-    window.addEventListener('resize', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  // Position 1 (en haut) : top: 20px, right: 10rem
-  // Position 2 (en bas) : calculée avec les offsets
-  const position1 = { top: -10, right: 10 }; 
-  const position2 = { top:-40, right: 710 }; 
+  // Position du drone responsives
+  const isMobile = windowSize.width <= 768;
+
+  // Position premeire page (en haut à droite)
+  const position1 = {
+    top: isMobile ? 10 : -10,
+    right: isMobile ? 20 : 100
+  };
+
+  // Position deuxième page (au centre gauche)
+  const position2 = {
+    top: isMobile ? windowSize.height * 0.5 : 90,
+    right: isMobile ? windowSize.width * 0.6 : windowSize.width * 0.45
+  };
 
   const currentTop = position1.top + (position2.top - position1.top) * scrollProgress;
   const currentRight = position1.right + (position2.right - position1.right) * scrollProgress;
