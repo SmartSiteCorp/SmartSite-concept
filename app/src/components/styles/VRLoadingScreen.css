@@ -74,6 +74,8 @@
   );
   background-size: 100% 40px;
   animation: grid-flow 20s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .vr-grid-vertical {
@@ -99,11 +101,15 @@
 
 .scanning-line {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 4px;
   background: linear-gradient(to right, transparent, hsl(var(--primary)), transparent);
   opacity: 0.5;
-  animation: scan-line 3s ease-in-out infinite;
+  animation: scan-line 6s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .central-glow {
@@ -318,14 +324,14 @@
 
 @keyframes scan-line {
   0% {
-    top: -4px;
+    transform: translateY(-4px);
     opacity: 0;
   }
   50% {
     opacity: 0.5;
   }
   100% {
-    top: 100%;
+    transform: translateY(100vh);
     opacity: 0;
   }
 }

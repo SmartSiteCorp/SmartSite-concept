@@ -32,11 +32,11 @@ function AnimatedText({ text, isHovered }) {
 function HoverRectangle({ position, size, onHoverChange, text, textPosition }) {
   const meshRef = useRef();
   const [isHovered, setIsHovered] = useState(false);
-  const opacityRef = useRef(0.1);
+  const opacityRef = useRef(0);
 
   useFrame(() => {
     if (meshRef.current) {
-      const targetOpacity = isHovered ? 0.3 : 0.1;
+      const targetOpacity = isHovered ? 0.0 : 0.0;
       opacityRef.current += (targetOpacity - opacityRef.current) * 0.1;
       meshRef.current.material.opacity = opacityRef.current;
     }
@@ -67,11 +67,7 @@ function HoverRectangle({ position, size, onHoverChange, text, textPosition }) {
         }}
       >
         <planeGeometry args={size} />
-        <meshBasicMaterial 
-          color="#f3f3f3" 
-          transparent 
-          side={THREE.DoubleSide}
-        />
+        <meshBasicMaterial color="#f3f3f3" transparent side={THREE.DoubleSide} />
       </mesh>
     </group>
   );
