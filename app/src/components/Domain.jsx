@@ -215,16 +215,17 @@ const Domain = () => {
       {/* Background ColorBends */}
       <div className="domain-background">
         <ColorBends
-          colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
-          rotation={30}
-          speed={0.3}
-          scale={1.2}
-          frequency={1.4}
-          warpStrength={1.2}
-          mouseInfluence={0.8}
-          parallax={0.6}
-          noise={0.08}
-          transparent
+          colors={["#ff0066", "#ff6600", "#ffcc00", "#00ff66", "#0066ff", "#6600ff", "#ff00cc"]}
+          rotation={45}
+          speed={0.5}
+          scale={0.7}
+          frequency={2}
+          warpStrength={2.5}
+          mouseInfluence={1.5}
+          parallax={1}
+          noise={0.05}
+          transparent={true}
+          style={{ width: '100%', height: '100%', minHeight: '100vh' }}
         />
       </div>
 
