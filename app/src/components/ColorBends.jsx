@@ -29,8 +29,8 @@ void main() {
   vec2 rp = vec2(p.x * uRot.x - p.y * uRot.y, p.x * uRot.y + p.y * uRot.x);
   vec2 q = vec2(rp.x * (uCanvas.x / uCanvas.y), rp.y);
   q /= max(uScale, 0.0001);
-  q /= 0.5 + 0.2 * dot(q, q);
-  q += 0.2 * cos(t) - 7.56;
+  q /= 0.9 + 0.1 * dot(q, q);
+  q += 0.2 * cos(t) - 0.88;
   vec2 toward = (uPointer - rp);
   q += toward * uMouseInfluence * 0.2;
 

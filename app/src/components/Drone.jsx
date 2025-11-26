@@ -32,8 +32,9 @@ function AnimatedDrone() {
   );
 }
 
-const Drone = () => {
+const Drone = ({ isVisible = true }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const droneContainerRef = useRef(null);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const Drone = () => {
         document.documentElement.offsetHeight,
         document.body.offsetHeight
       );
-      
+
       // Structure de la page :
       // - Section 1 (DesktopScene) : fixed, occupe 0vh à 100vh (première viewport)
       // - Section 2 (Domain) : relative avec marginTop: 100vh, occupe 100vh à 200vh (deuxième viewport)
@@ -78,6 +79,11 @@ const Drone = () => {
       setScrollProgress(progress);
     };
 
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      handleScroll();
+    };
+
     // Écouter le scroll sur window
     window.addEventListener('scroll', handleScroll, { passive: true });
     // Appeler une fois au chargement avec un petit délai pour s'assurer que le DOM est prêt
@@ -85,18 +91,28 @@ const Drone = () => {
     handleScroll();
 
     // Écouter les changements de taille de fenêtre
-    window.addEventListener('resize', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  // Position 1 (en haut) : top: 20px, right: 10rem
-  // Position 2 (en bas) : calculée avec les offsets
-  const position1 = { top: -10, right: 10 }; 
-  const position2 = { top:-40, right: 710 }; 
+  // Position du drone responsives
+  const isMobile = windowSize.width <= 768;
+
+  // Position premeire page (en haut à droite)
+  const position1 = {
+    top: isMobile ? 10 : -10,
+    right: isMobile ? 20 : 100
+  };
+
+  // Position deuxième page (au centre gauche)
+  const position2 = {
+    top: isMobile ? windowSize.height * 0.5 : 90,
+    right: isMobile ? windowSize.width * 0.6 : windowSize.width * 0.45
+  };
 
   const currentTop = position1.top + (position2.top - position1.top) * scrollProgress;
   const currentRight = position1.right + (position2.right - position1.right) * scrollProgress;
@@ -109,28 +125,35 @@ const Drone = () => {
   return (
     <>
       {/* Debug indicator - à retirer en production */}
-      <div style={{
-        position: 'fixed',
-        top: '10px',
-        left: '10px',
-        background: 'rgba(0,0,0,0.7)',
-        color: 'white',
-        padding: '10px',
-        zIndex: 9999,
-        fontSize: '12px',
-        fontFamily: 'monospace'
-      }}>
-        Progress: {(scrollProgress * 100).toFixed(1)}%
-      </div>
+      {isVisible && (
+        <div style={{
+          position: 'fixed',
+          top: '10px',
+          left: '10px',
+          background: 'rgba(0,0,0,0.7)',
+          color: 'white',
+          padding: '10px',
+          zIndex: 9999,
+          fontSize: '12px',
+          fontFamily: 'monospace',
+          opacity: isVisible ? 1 : 0,
+          transition: 'opacity 0.8s ease'
+        }}>
+          Progress: {(scrollProgress * 100).toFixed(1)}%
+        </div>
+      )}
       <div
         ref={droneContainerRef}
         className="drone-container"
         style={{
           top: `${currentTop}px`,
           right: `${currentRight}px`,
-          opacity: 1,
+          opacity: isVisible ? 1 : 0,
           transform: `scale(${currentScale})`,
           transformOrigin: 'center center',
+          filter: isVisible ? 'blur(0px)' : 'blur(12px)',
+          transition: 'opacity 1s ease, filter 1s ease',
+          pointerEvents: isVisible ? 'auto' : 'none',
         }}
       >
         <Canvas

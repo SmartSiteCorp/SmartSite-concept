@@ -6,7 +6,7 @@ import building1Image from "../assets/desktop/buliding1.png";
 import buildingbackImage from "../assets/desktop/buildingback.png";
 import "./styles/fonts.css"
 
-const DesktopScene = () => {
+const DesktopScene = ({ onLoadingComplete }) => {
   const [isZoomedIn, setIsZoomedIn] = useState(true);
   const [showVRLoading, setShowVRLoading] = useState(true);
 
@@ -14,6 +14,7 @@ const DesktopScene = () => {
     setIsZoomedIn(false);
     setTimeout(() => {
       setShowVRLoading(false);
+      if (onLoadingComplete) onLoadingComplete();
     }, 1000);
   };
 
