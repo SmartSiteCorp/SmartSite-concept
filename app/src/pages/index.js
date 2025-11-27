@@ -2,6 +2,7 @@ import { useState } from "react";
 import DesktopScene from "components/DesktopScene";
 import Domain from "components/Domain";
 import Drone from "components/Drone";
+import Missions from "components/Missions";
 
 const Index = () => {
     const [isDroneReady, setIsDroneReady] = useState(false);
@@ -19,6 +20,11 @@ const Index = () => {
             {/* Section 2: Domain (apparaît après le scroll) */}
             <div className="relative z-20" style={{ marginTop: '100vh' }}>
                 <Domain />
+            </div>
+
+            {/* Section 3: Missions */}
+            <div className="relative z-20">
+                <Missions />
             </div>
         </div>
     );

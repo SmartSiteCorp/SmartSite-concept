@@ -1,14 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import VRLoadingScreen from "./VRLoadingScreen";
 import "./styles/DesktopScene.css";
 import rockImage from "../assets/desktop/rock.png";
 import building1Image from "../assets/desktop/buliding1.png";
+import building2Image from "../assets/desktop/building2.png";
 import buildingbackImage from "../assets/desktop/buildingback.png";
+import cloudImage from "../assets/desktop/cloud.png";
+import grueImage from "../assets/desktop/grue.png";
 import "./styles/fonts.css"
 
 const DesktopScene = ({ onLoadingComplete }) => {
   const [isZoomedIn, setIsZoomedIn] = useState(true);
   const [showVRLoading, setShowVRLoading] = useState(true);
+
+  // Empêcher le scroll quand VRLoadingScreen est affiché
+  useEffect(() => {
+    if (showVRLoading) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showVRLoading]);
 
   const handleLoadingComplete = () => {
     setIsZoomedIn(false);
@@ -65,8 +80,17 @@ const DesktopScene = ({ onLoadingComplete }) => {
       {/* Building 1 Asset */}
       <img src={building1Image} alt="Building" className="building1-asset" />
 
+      {/* Building 2 Asset */}
+      <img src={building2Image} alt="Building 2" className="building2-asset" />
+
       {/* Building Back Asset */}
       <img src={buildingbackImage} alt="Building Background" className="buildingback-asset" />
+
+      {/* Cloud Asset */}
+      <img src={cloudImage} alt="Cloud" className="cloud-asset" />
+
+      {/* Grue Asset */}
+      <img src={grueImage} alt="Grue" className="grue-asset" />
 
 
 

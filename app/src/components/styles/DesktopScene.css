@@ -59,6 +59,21 @@
   right: 5%;
 }
 
+/* Building 2 asset */
+.building2-asset {
+  position: absolute;
+  top: 30vh;
+  left: -400px;
+  width: 400px;
+  height: auto;
+  z-index: 2;
+  transition: left 1.5s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s;
+}
+
+.desktop-scene.is-zoomed-out .building2-asset {
+  left: 5%;
+}
+
 /* Building back asset */
 .buildingback-asset {
   position: absolute;
@@ -74,6 +89,43 @@
 
 .desktop-scene.is-zoomed-out .buildingback-asset {
   opacity: 1;
+}
+
+/* Cloud asset */
+.cloud-asset {
+  position: absolute;
+  top: -8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: auto;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out 1s, transform 2s ease-in-out 1s;
+}
+
+.desktop-scene.is-zoomed-out .cloud-asset {
+  opacity: 0.8;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Grue asset */
+.grue-asset {
+  position: absolute;
+  right: 22%;
+  top:12vh;
+  width: 400px;
+  height: auto;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out 1.2s, bottom 1.5s cubic-bezier(0.22, 0.61, 0.36, 1) 1s;
+  transform: translateY(10px);
+}
+
+.desktop-scene.is-zoomed-out .grue-asset {
+  opacity: 1;
+  bottom: 0;
+  transform: translateY(0);
 }
 
 .desktop-scene.is-zoomed-in {
