@@ -124,8 +124,9 @@ const Drone = ({ isVisible = true }) => {
 
   return (
     <>
+
       {/* Debug indicator - à retirer en production */}
-      {isVisible && (
+      {/* {isVisible && (
         <div style={{
           position: 'fixed',
           top: '10px',
@@ -141,7 +142,7 @@ const Drone = ({ isVisible = true }) => {
         }}>
           Progress: {(scrollProgress * 100).toFixed(1)}%
         </div>
-      )}
+      )} */}
       <div
         ref={droneContainerRef}
         className="drone-container"
