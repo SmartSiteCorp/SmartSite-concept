@@ -1,11 +1,11 @@
-import { useRef, Suspense, useState } from 'react';
+import { useRef, Suspense, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import './styles/Domain.css';
 import './styles/fonts.css';
 import ColorBends from './ColorBends';
-
+import rockImage from '../assets/desktop/rock.png';
 // Importer les modèles 3D depuis src/assets/3d
 import androidModel from '../assets/3d/android.glb';
 import buildingModel from '../assets/3d/building.glb';
@@ -205,8 +205,35 @@ function Scene3D() {
 }
 
 const Domain = () => {
+  const rockRef = useRef(null);
+
+  useEffect(() => {
+    const el = rockRef.current;
+    if (!el) return;
+
+    const update = () => {
+      if ((window.scrollY || window.pageYOffset) > 0) {
+        el.classList.add('visible');
+      } else {
+        el.classList.remove('visible');
+      }
+    };
+
+    // initial state
+    update();
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
   return (
-    <section className="domain-section">
+    <section className="Rock">
+    <img ref={rockRef} src={rockImage} alt="Rock" className="rock" />
+    <div className="domain-section">
       {/* Background ColorBends */}
       <div className="domain-background">
         <ColorBends
@@ -236,6 +263,7 @@ const Domain = () => {
           </Canvas>
         </div>
       </div>
+    </div>
     </section>
   );
 };

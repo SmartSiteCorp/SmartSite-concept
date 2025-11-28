@@ -34,7 +34,7 @@
 .rock-asset {
   position: absolute;
   bottom: -200px;
-  width: auto;
+  width: 100%;
   height: auto;
   z-index: 3;
   transition: bottom 1.5s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s;
@@ -47,7 +47,7 @@
 /* Building 1 asset */
 .building1-asset {
   position: absolute;
-  top: 30vh;
+  bottom: 30%;
   right: -400px;
   width: 400px;
   height: auto;
@@ -62,7 +62,7 @@
 /* Building 2 asset */
 .building2-asset {
   position: absolute;
-  top: 30vh;
+  bottom: 30%;
   left: -400px;
   width: 400px;
   height: auto;
@@ -113,7 +113,7 @@
 .grue-asset {
   position: absolute;
   right: 22%;
-  top:12vh;
+  bottom: 10%;
   width: 400px;
   height: auto;
   z-index: 1;
@@ -124,7 +124,7 @@
 
 .desktop-scene.is-zoomed-out .grue-asset {
   opacity: 1;
-  bottom: 0;
+  bottom: 30%;
   transform: translateY(0);
 }
 

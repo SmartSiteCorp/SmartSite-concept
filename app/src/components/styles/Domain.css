@@ -12,6 +12,24 @@
   overflow: hidden;
 }
 
+.rock {
+  position: absolute;
+  bottom: calc(100%);
+  width: 100%;
+  max-width: none;
+  pointer-events: none;
+  z-index: 3;          
+}
+
+/* Show/hide rock smoothly based on scroll position */
+.rock {
+  opacity: 0;
+  transition: opacity ease-in-out;}
+.rock.visible {
+  opacity: 1;
+}
+
+
 .domain-background {
   position: absolute;
   top: 0;
