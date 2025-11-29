@@ -3,7 +3,12 @@
   width: 100%;
   min-height: 100vh;
   height: 100vh;
-  background: #220E0B;
+
+  background-color: #220E0B; 
+  background-image: url('../../assets/desktop/ground.png');/* delete to remove bg-img*/
+  background-position: bottom center;/* delete to remove bg-img*/
+  background-size: 100% 100%;         /* delete to remove bg-img*/
+
   display: flex;
   align-items: center;
   justify-content: center;

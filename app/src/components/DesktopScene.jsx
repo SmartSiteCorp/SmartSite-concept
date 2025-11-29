@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import VRLoadingScreen from "./VRLoadingScreen";
 import "./styles/DesktopScene.css";
 import rockImage from "../assets/desktop/rock.png";
@@ -12,6 +12,56 @@ import "./styles/fonts.css"
 const DesktopScene = ({ onLoadingComplete }) => {
   const [isZoomedIn, setIsZoomedIn] = useState(true);
   const [showVRLoading, setShowVRLoading] = useState(true);
+  const building1Ref = useRef(null);
+  const building2Ref = useRef(null);
+
+  // Scroll-driven horizontal parallax for buildings
+  useEffect(() => {
+    let rafId = null;
+
+    const maxTranslate = 420; // px max translation for buildings
+    const startOffset = 0; // px scroll at which animation starts
+
+    const shouldDisable = () => {
+      // disable on small screens (mobile)
+      return window.innerWidth < 768;
+    };
+
+    if (shouldDisable()) {
+      if (building1Ref.current) building1Ref.current.style.transform = "translate3d(0,0,0)";
+      if (building2Ref.current) building2Ref.current.style.transform = "translate3d(0,0,0)";
+      return;
+    }
+
+    const onScroll = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const range = window.innerHeight || document.documentElement.clientHeight;
+        let progress = 0;
+        if (scrollY > startOffset) progress = Math.min((scrollY - startOffset) / range, 1);
+        // optional ease-out curve
+        const eased = progress * (2 - progress);
+        const tx = Math.round(eased * maxTranslate);
+
+        if (building1Ref.current) {
+          building1Ref.current.style.transform = `translate3d(${tx}px, 0, 0)`;
+        }
+        if (building2Ref.current) {
+          building2Ref.current.style.transform = `translate3d(${-tx}px, 0, 0)`;
+        }
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // init
+    onScroll();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   // Empêcher le scroll quand VRLoadingScreen est affiché
   useEffect(() => {
@@ -78,10 +128,10 @@ const DesktopScene = ({ onLoadingComplete }) => {
       <img src={rockImage} alt="Rock" className="rock-asset" />
 
       {/* Building 1 Asset */}
-      <img src={building1Image} alt="Building" className="building1-asset" />
+      <img ref={building1Ref} src={building1Image} alt="Building" className="building1-asset" />
 
       {/* Building 2 Asset */}
-      <img src={building2Image} alt="Building 2" className="building2-asset" />
+      <img ref={building2Ref} src={building2Image} alt="Building 2" className="building2-asset" />
 
       {/* Building Back Asset */}
       <img src={buildingbackImage} alt="Building Background" className="buildingback-asset" />
