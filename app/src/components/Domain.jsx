@@ -14,6 +14,11 @@ import androidModel from "../assets/3d/android.glb";
 import buildingModel from "../assets/3d/building.glb";
 import phoneModel from "../assets/3d/phone.glb";
 
+const DOMAIN_COUNT = 3;
+
+// =========================
+// Textes animés
+// =========================
 function AnimatedText({ text, isHovered }) {
   const lines = text.split("<br/>");
 
@@ -141,12 +146,52 @@ function RotatingGLBModel({
   );
 }
 
-function Scene3D() {
+// =========================
+// Scene3D avec mode desktop / mobile
+// =========================
+function Scene3D({ isMobile, activeIndex }) {
   const [hoveredObjects, setHoveredObjects] = useState({
     android: false,
     building: false,
     phone: false,
   });
+
+  // Config pour le mode "diapo" mobile : tout centré
+  const mobileDomains = [
+    {
+      key: "android",
+      text: "Intelligence<br/>Artificielle",
+      rectPos: [0, -6, -1],
+      rectSize: [8, 12],
+      textPos: [0, 3, 0],
+      modelPath: androidModel,
+      modelPos: [0, -6.5, 0],
+      scale: [14.5, 14.5, 14.5],
+      rotation: [0, 0, 0],
+    },
+    {
+      key: "building",
+      text: "Réalité<br/>Augmentée",
+      rectPos: [0, -6, -1],
+      rectSize: [8, 12],
+      textPos: [0, 3, 0],
+      modelPath: buildingModel,
+      modelPos: [0, -6, 0],
+      scale: [0.4, 0.4, 0.4],
+      rotation: [0, 0, 0],
+    },
+    {
+      key: "phone",
+      text: "Développement<br/>Web & Mobile",
+      rectPos: [0, -4, -1],
+      rectSize: [8, 5],
+      textPos: [0, 3, 0],
+      modelPath: phoneModel,
+      modelPos: [0, -4, 0],
+      scale: [25, 25, 25],
+      rotation: [0.5, 0, 0.5],
+    },
+  ];
 
   return (
     <>
@@ -155,57 +200,88 @@ function Scene3D() {
       <pointLight position={[-10, -10, -5]} intensity={0.5} />
 
       <Suspense fallback={null}>
-        {/* Android - IA */}
-        <HoverRectangle
-          position={[-12.5, -7, -1]}
-          size={[8, 17.5]}
-          text="Intelligence<br/>Artificielle"
-          textPosition={[-12.5, 3, 0]}
-          onHoverChange={(hovered) =>
-            setHoveredObjects((prev) => ({ ...prev, android: hovered }))
-          }
-        />
-        <RotatingGLBModel
-          modelPath={androidModel}
-          position={[-12, -7.5, 0]}
-          scale={[14.5, 14.5, 14.5]}
-          isHovered={hoveredObjects.android}
-        />
+        {isMobile ? (
+          // 🔹 Mode MOBILE : un domaine à la fois, centré
+          (() => {
+            const cfg = mobileDomains[activeIndex];
 
-        {/* Building - RA */}
-        <HoverRectangle
-          position={[0, -6, -1]}
-          size={[8, 12]}
-          text="Réalité<br/>Augmentée"
-          textPosition={[0, 3, 0]}
-          onHoverChange={(hovered) =>
-            setHoveredObjects((prev) => ({ ...prev, building: hovered }))
-          }
-        />
-        <RotatingGLBModel
-          modelPath={buildingModel}
-          position={[0, -6, 0]}
-          scale={[0.4, 0.4, 0.4]}
-          isHovered={hoveredObjects.building}
-        />
+            return (
+              <>
+                <HoverRectangle
+                  position={cfg.rectPos}
+                  size={cfg.rectSize}
+                  text={cfg.text}
+                  textPosition={cfg.textPos}
+                  onHoverChange={(hovered) =>
+                    setHoveredObjects((prev) => ({ ...prev, [cfg.key]: hovered }))
+                  }
+                />
+                <RotatingGLBModel
+                  modelPath={cfg.modelPath}
+                  position={cfg.modelPos}
+                  scale={cfg.scale}
+                  rotation={cfg.rotation}
+                  isHovered={hoveredObjects[cfg.key]}
+                />
+              </>
+            );
+          })()
+        ) : (
+          // 🔹 Mode DESKTOP : layout original avec les 3 objets
+          <>
+            {/* Android - IA */}
+            <HoverRectangle
+              position={[-12.5, -7, -1]}
+              size={[8, 17.5]}
+              text="Intelligence<br/>Artificielle"
+              textPosition={[-12.5, 3, 0]}
+              onHoverChange={(hovered) =>
+                setHoveredObjects((prev) => ({ ...prev, android: hovered }))
+              }
+            />
+            <RotatingGLBModel
+              modelPath={androidModel}
+              position={[-12, -7.5, 0]}
+              scale={[14.5, 14.5, 14.5]}
+              isHovered={hoveredObjects.android}
+            />
 
-        {/* Phone - Web & Mobile */}
-        <HoverRectangle
-          position={[12.5, -4, -1]}
-          size={[8, 5]}
-          text="Développement<br/>Web & Mobile"
-          textPosition={[12.5, 3, 0]}
-          onHoverChange={(hovered) =>
-            setHoveredObjects((prev) => ({ ...prev, phone: hovered }))
-          }
-        />
-        <RotatingGLBModel
-          modelPath={phoneModel}
-          position={[12, -4, 0]}
-          scale={[25, 25, 25]}
-          rotation={[0.5, 0, 0.5]}
-          isHovered={hoveredObjects.phone}
-        />
+            {/* Building - RA */}
+            <HoverRectangle
+              position={[0, -6, -1]}
+              size={[8, 12]}
+              text="Réalité<br/>Augmentée"
+              textPosition={[0, 3, 0]}
+              onHoverChange={(hovered) =>
+                setHoveredObjects((prev) => ({ ...prev, building: hovered }))
+              }
+            />
+            <RotatingGLBModel
+              modelPath={buildingModel}
+              position={[0, -6, 0]}
+              scale={[0.4, 0.4, 0.4]}
+              isHovered={hoveredObjects.building}
+            />
+
+            {/* Phone - Web & Mobile */}
+            <HoverRectangle
+              position={[12.5, -4, -1]}
+              size={[8, 5]}
+              text="Développement<br/>Web & Mobile"
+              textPosition={[12.5, 3, 0]}
+              onHoverChange={(hovered) =>
+                setHoveredObjects((prev) => ({ ...prev, phone: hovered }))
+              }
+            />
+            <RotatingGLBModel
+              modelPath={phoneModel}
+              position={[12, -4, 0]}
+              scale={[25, 25, 25]}
+              rotation={[0.5, 0, 0.5]}
+              isHovered={hoveredObjects.phone}
+            />
+          </>
+        )}
       </Suspense>
 
       <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
@@ -220,12 +296,27 @@ const Domain = () => {
   const rockRef = useRef(null);
   const monitorWrapperRef = useRef(null);
 
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth <= 768 : false
+  );
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Gestion mobile / desktop
+  useEffect(() => {
+    const onResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Rock + monitor show/hide
   useEffect(() => {
     const rockEl = rockRef.current;
     const monitorEl = monitorWrapperRef.current;
     if (!rockEl || !monitorEl) return;
 
-    const HIDE_DELAY_MS = 10;
+    const HIDE_DELAY_MS = 0;
     let hideTimeout = null;
 
     const update = () => {
@@ -262,6 +353,14 @@ const Domain = () => {
     };
   }, []);
 
+  const goPrev = () => {
+    setActiveIndex((prev) => (prev - 1 + DOMAIN_COUNT) % DOMAIN_COUNT);
+  };
+
+  const goNext = () => {
+    setActiveIndex((prev) => (prev + 1) % DOMAIN_COUNT);
+  };
+
   return (
     <section className="Rock">
       {/* Moniteur au-dessus du rocher */}
@@ -276,7 +375,7 @@ const Domain = () => {
               <div className="domain-monitor-bezel">
                 <div className="domain-monitor-screen">
                   <div className="domain-monitor-screen-inner">
-                    {/* Tu pourras mettre du contenu ici si tu veux */}
+                    {/* Contenu à mettre dans l'écran si tu veux */}
                   </div>
                 </div>
               </div>
@@ -319,13 +418,32 @@ const Domain = () => {
 
         <div className="domain-container">
           <h2 className="domain-title">NOS DOMAINES</h2>
+
           <div className="domain-canvas-wrapper">
             <Canvas
               camera={{ position: [0, 0, 15], fov: 50 }}
               style={{ width: "100%", height: "100%" }}
             >
-              <Scene3D />
+              <Scene3D isMobile={isMobile} activeIndex={activeIndex} />
             </Canvas>
+
+            {/* Flèches diapo : visibles seulement en mobile via CSS */}
+            <div className="domain-slider-controls">
+              <button
+                type="button"
+                className="domain-slider-arrow domain-slider-arrow-left"
+                onClick={goPrev}
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                className="domain-slider-arrow domain-slider-arrow-right"
+                onClick={goNext}
+              >
+                ›
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -369,7 +369,6 @@
 }
 
 @media (max-width: 767px) {
-  .building1-asset,
   .building2-asset{
     display: none !important;
     visibility: hidden !important;
