@@ -12,8 +12,22 @@ import "./styles/fonts.css"
 const DesktopScene = ({ onLoadingComplete }) => {
   const [isZoomedIn, setIsZoomedIn] = useState(true);
   const [showVRLoading, setShowVRLoading] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const building1Ref = useRef(null);
   const building2Ref = useRef(null);
+
+    useEffect(() => {
+    const handleScroll = () => {
+      const threshold = window.innerHeight * 0.001;
+      setIsScrolled(window.scrollY > threshold);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // init
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   // Scroll-driven horizontal parallax for buildings
   useEffect(() => {
@@ -82,12 +96,14 @@ const DesktopScene = ({ onLoadingComplete }) => {
       if (onLoadingComplete) onLoadingComplete();
     }, 1000);
   };
-
+  
+  
   return (
+    
     <div
       className={`desktop-scene ${
         isZoomedIn ? "is-zoomed-in" : "is-zoomed-out"
-      }`}
+      } ${isScrolled ? "is-scrolled" : ""}`}
     >
       <h1 className="smartsite">SMARTSITE</h1>
             <div className="scene-wrapper">

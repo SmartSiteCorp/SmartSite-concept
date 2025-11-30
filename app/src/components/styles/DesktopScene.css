@@ -49,7 +49,7 @@
   position: absolute;
   bottom: 30%;
   right: -400px;
-  width: 26%; /* old: 400px */
+  width: 400px; /* or 26% */
   height: auto;
   z-index: 2;
   transition: right 1.5s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s;
@@ -64,7 +64,7 @@
   position: absolute;
   bottom: 30%;
   left: -400px;
-  width: 26%;/* old: 400px */
+  width: 400px;/* or: 26% */
   height: auto;
   z-index: 2;
   transition: left 1.5s cubic-bezier(0.22, 0.61, 0.36, 1) 0.8s;
@@ -90,7 +90,6 @@
 .desktop-scene.is-zoomed-out .buildingback-asset {
   opacity: 1;
 }
-
 /* Cloud asset */
 .cloud-asset {
   position: absolute;
@@ -114,7 +113,7 @@
   position: absolute;
   right: 22%;
   bottom: 10%;
-  width: 26%; /* old: 400px */
+  width: 400px; /* or 26% */
   height: auto;
   z-index: 1;
   opacity: 0;
@@ -140,7 +139,7 @@
 .desktop-scene.is-zoomed-out .desk-surface,
 .desktop-scene.is-zoomed-out .computer-monitor {
   opacity: 1;
-  transition: opacity 0.5s ease-in-out 0.5s;
+  transition: opacity 0s ease-in-out 0.5s;
 }
 
 .vr-loading-overlay {
@@ -161,17 +160,18 @@
 }
 
 .scene-wrapper {
-  position: relative;
+  position: absolute;
+  bottom: 5rem;                  
   width: 100%;
   max-width: 68rem;
   min-height: 32rem;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  transition: transform 2.8s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.5s ease-in-out;
+  transition: transform 2.8s cubic-bezier(0.22, 0.61, 0.36, 1);
   transform-origin: center center;
   opacity: 0;
-  z-index: 2;
+  z-index: 60;
 }
 
 .desktop-scene.is-zoomed-in .scene-wrapper {
@@ -182,7 +182,7 @@
 .desktop-scene.is-zoomed-out .scene-wrapper {
   transform: scale(1) translateY(0);
   opacity: 1;
-  transition: transform 2.8s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.5s ease-in-out 0.5s;
+  transition: transform 2.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .desk-surface {
@@ -244,7 +244,7 @@
   border: 2px solid rgb(51, 65, 85);
   transform: rotateX(5deg);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.608), inset 0 1px 2px rgba(255, 255, 255, 0.1);
-  transition: opacity 1.4s cubic-bezier(0.22, 0.61, 0.36, 1), border 1.4s cubic-bezier(0.22, 0.61, 0.36, 1), padding 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: opacity 0s cubic-bezier(0.22, 0.61, 0.36, 1), border 1.4s cubic-bezier(0.22, 0.61, 0.36, 1), padding 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .desktop-scene.is-zoomed-in .monitor-frame {
@@ -334,7 +334,7 @@
   box-shadow: 0 0 8px hsl(var(--primary));
   animation: pulse-glow 2s ease-in-out infinite;
   opacity: 1;
-  transition: opacity 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: opacity 0 cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .desktop-scene.is-zoomed-in .monitor-led {
@@ -350,7 +350,7 @@
   font-size: 0.5rem;
   font-weight: 600;
   opacity: 1;
-  transition: opacity 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: opacity 0s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .desktop-scene.is-zoomed-in .monitor-brand {
@@ -366,4 +366,42 @@
     opacity: 0.6;
     box-shadow: 0 0 12px hsl(var(--primary));
   }
+}
+
+@media (max-width: 767px) {
+  .building1-asset,
+  .building2-asset{
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: none !important;
+    right: auto !important;
+    left: auto !important;
+  }
+    .smartsite {
+    font-size: 3.0rem !important;
+    transition: 2s;
+  }
+  .cloud-asset {
+    height: 30vh;
+  }
+  
+
+}
+
+@media (max-width: 950px) {
+  .building1-asset,
+  .building2-asset{
+    width: 300px;
+    transition: 2s;
+  }
+  .grue-asset {
+    width: 300px;
+    transition: 2s;
+  }
+}
+.desktop-scene.is-scrolled .scene-wrapper {
+  opacity: 0;
+  transition: opacity 0s;
 }
