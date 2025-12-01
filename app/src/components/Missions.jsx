@@ -15,6 +15,8 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import './styles/Missions.css';
+import paperMission from '../assets/desktop/paperMission.png';
+import scotch from '../assets/desktop/scoth.png';
 
 const missions = [
   {
@@ -84,10 +86,15 @@ const Missions = () => {
   return (
     <section className="missions-section">
       <div className="missions-container">
-        <h2 className="missions-title">Nos Missions</h2>
-        <p className="missions-subtitle">
+        <h2 className="missions-title">NOS MISSIONS</h2>
+        <div className='mission-paper'>
+          <p className="missions-subtitle">
         L’objectif : transformer chaque chantier en un espace intelligent où l’information circule mieux et où le travail avance plus simplement.
         </p>
+        <img src={paperMission} alt="Paper Mission Background" className="mission-paper-img" />
+        <img src={scotch} alt="Scotch Mission" className="mission-scotch-img" />
+        </div>
+        
         
         <div className="missions-carousel-wrapper">
           <Carousel

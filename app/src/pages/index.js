@@ -3,6 +3,7 @@ import DesktopScene from "components/DesktopScene";
 import Domain from "components/Domain";
 import Drone from "components/Drone";
 import Missions from "components/Missions";
+import TuyauxDisplay from "components/Tuyaux";
 
 const Index = () => {
     const [isDroneReady, setIsDroneReady] = useState(false);
@@ -22,6 +23,12 @@ const Index = () => {
                     <Domain />
                 </div>
             )}
+            {isDroneReady && (
+                <div className="relative z-30" style={{ }}>
+                    <TuyauxDisplay />
+                </div>
+            )}
+
 
             {/* Section 3: Missions (affichée seulement après validation/fin du chargement) */}
             {isDroneReady && (

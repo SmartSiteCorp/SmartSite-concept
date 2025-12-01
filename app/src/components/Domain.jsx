@@ -8,6 +8,7 @@ import "./styles/fonts.css";
 
 import ColorBends from "./ColorBends";
 import rockImage from "../assets/desktop/rock.png";
+import Tuyaux from "../assets/desktop/TuyauxDomains.png";
 
 // Modèles 3D
 import androidModel from "../assets/3d/android.glb";
@@ -446,6 +447,7 @@ const Domain = () => {
             </div>
           </div>
         </div>
+              <img src={Tuyaux} alt="Tuyaux" className="tuyaux-domain" />
       </div>
     </section>
   );
