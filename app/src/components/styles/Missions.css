@@ -5,8 +5,7 @@
   width: 100%;
   min-height: 100vh;    
   background-image: 
-    linear-gradient(to bottom, rgb(254, 251, 191), rgb(237, 195, 231), rgb(202, 238, 255)),
-    url('../../assets/desktop/bridge.png');
+    linear-gradient(to bottom, rgb(254, 251, 191), rgb(237, 195, 231), rgb(202, 238, 255));
 
   background-position: 
     center center,       
