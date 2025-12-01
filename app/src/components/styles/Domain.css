@@ -3,7 +3,9 @@
   width: 100%;
   min-height: 100vh;
   height: 100vh;
-  background: #220E0B;
+
+  background-color: #250D0A; 
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,6 +13,159 @@
   z-index: 20;
   overflow: hidden;
 }
+.domain-monitor-wrapper {
+  position: absolute;
+  bottom: calc(100%); /* ajuste la valeur selon ton rendu */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 68rem;
+  z-index: 4; /* au-dessus du rocher (z-index: 3) */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none; /* ne bloque pas les interactions de la page */
+}
+
+.domain-monitor-desk {
+  position: relative;
+  width: 100%;
+  max-width: 37rem;
+  pointer-events: auto; /* si tu veux du contenu cliquable dans l'écran plus tard */
+}
+
+.domain-monitor {
+  position: relative;
+  margin: 0 auto;
+  transform: scale(0.9);
+  perspective: 2000px;
+}
+
+/* Pied de l'écran */
+.domain-monitor-stand {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(50%);
+  width: 5rem;
+  height: 3rem;
+  background: linear-gradient(to bottom, rgb(51, 65, 85), rgb(30, 41, 59));
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.domain-monitor-stand-base {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9rem;
+  height: 0.85rem;
+  background-color: rgb(30, 41, 59);
+  border-radius: 9999px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Cadre de l'écran */
+.domain-monitor-frame {
+  position: relative;
+  bottom: 1.1rem;
+  left: 3.5rem;
+  width: 30rem;
+  height: 15.5rem;
+  background: linear-gradient(to bottom, rgb(30, 41, 59), rgb(15, 23, 42));
+  border-radius: 1rem;
+  padding: 0.8rem;
+  border: 2px solid rgb(51, 65, 85);
+  transform: rotateX(5deg);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Bezel / écran */
+.domain-monitor-bezel {
+  position: relative;
+  height: 13.5rem;
+  background-color: black;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.domain-monitor-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.domain-monitor-screen-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LED d'alimentation */
+.domain-monitor-led {
+  position: absolute;
+  bottom: 1.3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.25rem;
+  height: 0.25rem;
+  background-color: hsl(var(--primary));
+  border-radius: 9999px;
+  box-shadow: 0 0 8px hsl(var(--primary));
+  animation: pulse-glow 2s ease-in-out infinite;
+  opacity: 1;
+  transition: opacity 0 cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.rock {
+  position: absolute;
+  bottom: calc(100% - 0.1%);
+  width: 100%;
+  max-width: none;
+  pointer-events: none;
+  z-index: 3;          
+}
+
+
+/* Show/hide rock smoothly based on scroll position */
+.rock {
+  opacity: 0;
+  transition: opacity ease-in-out;}
+.rock.visible {
+  opacity: 1;
+}
+.domain-monitor-wrapper {
+  opacity: 0;
+  transition: opacity ease-in-out;}
+.domain-monitor-wrapper.visible {
+  opacity: 1;
+}
+
+.domain-monitor-brand {
+  position: absolute;
+  bottom: 1.45rem;
+  left: 82%;
+  transform: translateX(-50%);
+  color: rgb(100, 116, 139);
+  font-size: 0.5rem;
+  font-weight: 600;
+  opacity: 1;
+  transition: opacity 0s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+
+
 
 .domain-background {
   position: absolute;
@@ -103,6 +258,76 @@
   border-bottom: 2.5px solid #b1cd9d;
 }
 
+.domain-canvas-wrapper {
+  position: relative; /* <-- ajouté pour ancrer les flèches */
+  width: 100%;
+  height: 500px;
+  background: #f3f3f3;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.888);
+}
+
+.domain-slider-controls {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .domain-title {
+    font-size: 2rem;
+  }
+  
+  .domain-canvas-wrapper {
+    height: 400px;
+  }
+
+  .animated-button {
+    font-size: 1em;
+    letter-spacing: 2px;
+  }
+
+  /* Flèches visibles en mobile */
+  .domain-slider-controls {
+    display: flex;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    pointer-events: none; /* on laisse les boutons réactiver les events */
+    z-index: 5;
+  }
+
+  .domain-slider-arrow {
+    pointer-events: auto;
+    border: none;
+    background: rgba(0, 0, 0, 0.45);
+    color: #ffffff;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+  }
+
+  .domain-slider-arrow:active {
+    transform: scale(0.95);
+  }
+}
+
+@media (max-width: 480px) {
+  .animated-button {
+    font-size: 0.8em;
+    letter-spacing: 1px;
+  }
+}
+
+
 @keyframes ani {
   0% {
     background-position: 0%;
@@ -116,7 +341,7 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .domain-title {
     font-size: 2rem;
   }
