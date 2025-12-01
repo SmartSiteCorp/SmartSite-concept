@@ -1,0 +1,9 @@
+.tuyaux-wrapper{
+  height: 100%;
+}
+.tuyaux {
+  width: 100%;
+  position: absolute;
+  bottom: -2vh;
+  z-index: 60;
+}
