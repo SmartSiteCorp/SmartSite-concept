@@ -177,7 +177,7 @@ function Scene3D({ isMobile, activeIndex }) {
       textPos: [0, 3, 0],
       modelPath: buildingModel,
       modelPos: [0, -6, 0],
-      scale: [0.4, 0.4, 0.4],
+      scale: [0.1, 0.1, 0.1],
       rotation: [0, 0, 0],
     },
     {
@@ -187,9 +187,6 @@ function Scene3D({ isMobile, activeIndex }) {
       rectSize: [8, 5],
       textPos: [0, 3, 0],
       modelPath: phoneModel,
-      modelPos: [0, -4, 0],
-      scale: [25, 25, 25],
-      rotation: [0.5, 0, 0.5],
     },
   ];
 
@@ -201,7 +198,7 @@ function Scene3D({ isMobile, activeIndex }) {
 
       <Suspense fallback={null}>
         {isMobile ? (
-          // 🔹 Mode MOBILE : un domaine à la fois, centré
+          // 🔹 Mode MOBILE/TABLETTE : un domaine à la fois, centré, ANIMATION AUTO
           (() => {
             const cfg = mobileDomains[activeIndex];
 
@@ -221,7 +218,8 @@ function Scene3D({ isMobile, activeIndex }) {
                   position={cfg.modelPos}
                   scale={cfg.scale}
                   rotation={cfg.rotation}
-                  isHovered={hoveredObjects[cfg.key]}
+                  // 👉 en mode slide (mobile/tablette) : l’objet actif tourne tout seul
+                  isHovered={true}
                 />
               </>
             );
@@ -243,6 +241,7 @@ function Scene3D({ isMobile, activeIndex }) {
               modelPath={androidModel}
               position={[-12, -7.5, 0]}
               scale={[14.5, 14.5, 14.5]}
+              rotation={[0, 0, 0]}
               isHovered={hoveredObjects.android}
             />
 
@@ -260,6 +259,7 @@ function Scene3D({ isMobile, activeIndex }) {
               modelPath={buildingModel}
               position={[0, -6, 0]}
               scale={[0.4, 0.4, 0.4]}
+              rotation={[0, 0, 0]}
               isHovered={hoveredObjects.building}
             />
 
