@@ -5,28 +5,32 @@ import './styles/Drone.css';
 import droneModel from '../assets/3d/drone2.fbx';
 
 // Composant pour le modèle du drone avec animation
-function AnimatedDrone() {
+function AnimatedDrone({ zoomProgress = 0 }) {
   const groupRef = useRef();
   const fbx = useFBX(droneModel);
   const timeRef = useRef(0);
 
-  useFrame((state, delta) => {
+  // Scale de base + zoom progressif (de 1x à 1.7x)
+  const baseScale = 0.0025;
+  const zoomMultiplier = 0.9 + zoomProgress * 0.7; // 1 -> 1.7
+  const currentScale = baseScale * zoomMultiplier;
+
+  useFrame((_, delta) => {
     if (groupRef.current) {
       timeRef.current += delta;
-      
-      // Animation de flottement (mouvement vertical sinusoïdal) - réduit pour rester dans le cadre
+
+      // Animation de flottement (mouvement vertical sinusoïdal)
       const floatY = -1 + Math.sin(timeRef.current * 0.8) * 0.2;
       groupRef.current.position.y = floatY;
-      
-      // Légère oscillation horizontale - réduit pour rester dans le cadre
-      // Décalage de base vers la gauche (-0.5) + oscillation
+
+      // Légère oscillation horizontale
       const floatX = -1.5 + Math.cos(timeRef.current * 0.6) * 0.15;
       groupRef.current.position.x = floatX;
     }
   });
 
   return (
-    <group ref={groupRef} scale={[0.0025, 0.0025, 0.0025]} position={[-0.5, 0, 0]}>
+    <group ref={groupRef} scale={[currentScale, currentScale, currentScale]} position={[-0.5, 0, 0]}>
       <primitive object={fbx.clone()} />
     </group>
   );
@@ -120,7 +124,7 @@ const Drone = ({ isVisible = true, endScrollVh = 1.0 }) => {
 
   // Position deuxième page (au centre gauche)
   const position2 = {
-    top: isMobile ? 160 : 140,
+    top: isMobile ? 200 : 180,
     right: isMobile ? windowSize.width * 0.3 : windowSize.width * 0.38
   };
 
@@ -176,7 +180,7 @@ const Drone = ({ isVisible = true, endScrollVh = 1.0 }) => {
           <ambientLight intensity={0.8} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
           <pointLight position={[-5, -5, -5]} intensity={0.5} />
-          <AnimatedDrone />
+          <AnimatedDrone zoomProgress={scrollProgress} />
         </Canvas>
       </div>
     </>
