@@ -33,13 +33,13 @@
   font-weight: 700;
   text-align: center;
   font-family: "Kufam", sans-serif;
-  color: #b76e47;
+  color: #de804d;
   margin: 0;
 
   /* -webkit-text-stroke: 1px #1e293b; */
   text-shadow:
-    0 0 4px rgb(0, 0, 0),
-    0 0 8px rgb(0, 0, 0),
+    0 0 4px rgb(27, 27, 27),
+    0 0 8px rgb(17, 17, 17),
     2px 2px 4px rgba(83, 81, 81, 1);
 }
 
