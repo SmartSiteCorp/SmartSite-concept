@@ -89,29 +89,31 @@ const Missions = () => {
         <h2 className="missions-title">NOS MISSIONS</h2>
         <div className='mission-paper'>
           <p className="missions-subtitle">
-        L’objectif : transformer chaque chantier en un espace intelligent où l’information circule mieux et où le travail avance plus simplement.
+        L'objectif : transformer chaque chantier en un espace intelligent où l'information circule mieux et où le travail avance plus simplement.
         </p>
         <img src={paperMission} alt="Paper Mission Background" className="mission-paper-img" />
         <img src={scotch} alt="Scotch Mission" className="mission-scotch-img" />
         </div>
-        
-        
+
+
         <div className="missions-carousel-wrapper">
-          <Carousel
-            className="missions-carousel"
-            opts={{
-              align: 'start',
-              loop: true,
-            }}
-            setApi={handleApi}
-          >
-            <CarouselContent className="missions-carousel-content">
-              {missions.map((mission) => {
-                const IconComponent = mission.icon;
-                return (
-                  <CarouselItem key={mission.id} className="missions-carousel-item">
-                    <div className="mission-card">
-                      <div 
+          {/* UNE SEULLE CARTE ARMAAAAAAND */}
+          <div className="mission-card">
+            <Carousel
+              className="missions-carousel"
+              opts={{
+                align: 'start',
+                loop: true,
+              }}
+              setApi={handleApi}
+            >
+              <CarouselContent className="missions-carousel-content">
+                {missions.map((mission) => {
+                  const IconComponent = mission.icon;
+                  return (
+                    <CarouselItem key={mission.id} className="missions-carousel-item">
+                      {/* Avec le contenu qui defileeee */}
+                      <div
                         className="mission-icon-wrapper"
                         style={{ '--mission-color': mission.color }}
                       >
@@ -121,15 +123,15 @@ const Missions = () => {
                         <h3 className="mission-title">{mission.title}</h3>
                         <p className="mission-description">{mission.description}</p>
                       </div>
-                    </div>
-                  </CarouselItem>
-                );
-              })}
-            </CarouselContent>
-            <CarouselPrevious className="missions-nav-button missions-nav-prev" />
-            <CarouselNext className="missions-nav-button missions-nav-next" />
-          </Carousel>
-          
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+              <CarouselPrevious className="missions-nav-button missions-nav-prev" />
+              <CarouselNext className="missions-nav-button missions-nav-next" />
+            </Carousel>
+          </div>
+
           <div className="missions-indicators">
             {missions.map((_, index) => (
               <button
@@ -147,4 +149,3 @@ const Missions = () => {
 };
 
 export default Missions;
-
