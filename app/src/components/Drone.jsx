@@ -124,7 +124,7 @@ const Drone = ({ isVisible = true, endScrollVh = 1.0 }) => {
 
   // Position deuxième page (au centre gauche)
   const position2 = {
-    top: isMobile ? 200 : 180,
+    top: isMobile ? 130 : 110,
     right: isMobile ? windowSize.width * 0.3 : windowSize.width * 0.38
   };
 

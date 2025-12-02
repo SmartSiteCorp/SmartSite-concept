@@ -30,7 +30,7 @@ void main() {
   vec2 q = vec2(rp.x * (uCanvas.x / uCanvas.y), rp.y);
   q /= max(uScale, 0.0001);
   q /= 0.9 + 0.1 * dot(q, q);
-  q += 0.2 * cos(t) - 0.88;
+  q += 0.2 * cos(t) - 0.30;
   vec2 toward = (uPointer - rp);
   q += toward * uMouseInfluence * 0.2;
 
