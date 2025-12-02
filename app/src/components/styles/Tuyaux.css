@@ -7,3 +7,10 @@
   bottom: -9vh;
   z-index: 60;
 }
+
+/* Responsive */
+@media (max-height: 800px) {
+  .tuyaux {
+    bottom: -3.5vh;
+  }
+}

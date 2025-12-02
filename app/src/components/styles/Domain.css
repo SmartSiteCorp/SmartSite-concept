@@ -368,3 +368,9 @@
     letter-spacing: 1px;
   }
 }
+
+@media (max-height: 800px) {
+  .tuyaux-domain {
+    bottom: -6vh;
+  }
+}
