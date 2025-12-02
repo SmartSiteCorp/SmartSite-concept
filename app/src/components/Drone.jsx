@@ -2,7 +2,11 @@ import { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useFBX } from '@react-three/drei';
 import './styles/Drone.css';
-import droneModel from '../assets/3d/drone2.fbx';
+
+function droneModel() {
+  const fbx = useFBX(`${process.env.PUBLIC_URL}/3d/drone2.fbx`);
+  return <primitive object={fbx} />;
+}
 
 // Composant pour le modèle du drone avec animation
 function AnimatedDrone({ zoomProgress = 0 }) {

@@ -10,11 +10,6 @@ import ColorBends from "./ColorBends";
 import rockImage from "../assets/desktop/rock.png";
 import Tuyaux from "../assets/desktop/TuyauxDomains.png";
 
-// Modèles 3D
-import androidModel from "../assets/3d/android.glb";
-import buildingModel from "../assets/3d/building.glb";
-import phoneModel from "../assets/3d/phone.glb";
-
 const DOMAIN_COUNT = 3;
 
 // =========================
@@ -165,7 +160,7 @@ function Scene3D({ isMobile, activeIndex }) {
       rectPos: [0, -6, -1],
       rectSize: [8, 12],
       textPos: [0, 3, 0],
-      modelPath: androidModel,
+      modelPath: `${process.env.PUBLIC_URL}/3d/android.glb`,
       modelPos: [0, -6.5, 0],
       scale: [14.5, 14.5, 14.5],
       rotation: [0, 0, 0],
@@ -176,7 +171,7 @@ function Scene3D({ isMobile, activeIndex }) {
       rectPos: [0, -6, -1],
       rectSize: [8, 12],
       textPos: [0, 3, 0],
-      modelPath: buildingModel,
+      modelPath: `${process.env.PUBLIC_URL}/3d/building.glb`,
       modelPos: [0, -6, 0],
       scale: [0.1, 0.1, 0.1],
       rotation: [0, 0, 0],
@@ -187,7 +182,10 @@ function Scene3D({ isMobile, activeIndex }) {
       rectPos: [0, -4, -1],
       rectSize: [8, 5],
       textPos: [0, 3, 0],
-      modelPath: phoneModel,
+      modelPath: `${process.env.PUBLIC_URL}/3d/phone.glb`,
+      modelPos: [0, -4, 0],
+      scale: [25, 25, 25],
+      rotation: [0.5, 0, 0.5],
     },
   ];
 
@@ -239,7 +237,7 @@ function Scene3D({ isMobile, activeIndex }) {
               }
             />
             <RotatingGLBModel
-              modelPath={androidModel}
+              modelPath={`${process.env.PUBLIC_URL}/3d/android.glb`}
               position={[-12, -7.5, 0]}
               scale={[14.5, 14.5, 14.5]}
               rotation={[0, 0, 0]}
@@ -257,7 +255,7 @@ function Scene3D({ isMobile, activeIndex }) {
               }
             />
             <RotatingGLBModel
-              modelPath={buildingModel}
+              modelPath={`${process.env.PUBLIC_URL}/3d/building.glb`}
               position={[0, -6, 0]}
               scale={[0.4, 0.4, 0.4]}
               rotation={[0, 0, 0]}
@@ -275,7 +273,7 @@ function Scene3D({ isMobile, activeIndex }) {
               }
             />
             <RotatingGLBModel
-              modelPath={phoneModel}
+              modelPath={`${process.env.PUBLIC_URL}/3d/phone.glb`}
               position={[12, -4, 0]}
               scale={[25, 25, 25]}
               rotation={[0.5, 0, 0.5]}
