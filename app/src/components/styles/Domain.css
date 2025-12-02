@@ -232,7 +232,7 @@
 
 .tuyaux-domain {
   position: absolute;
-  bottom: -4.5vh;
+  bottom: -11.9vh;
   width: 100%;
   z-index: 1;
   left: -0.3rem;
@@ -366,5 +366,11 @@
   .animated-button {
     font-size: 0.8em;
     letter-spacing: 1px;
+  }
+}
+
+@media (max-height: 800px) {
+  .tuyaux-domain {
+    bottom: -6vh;
   }
 }

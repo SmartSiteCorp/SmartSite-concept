@@ -5,35 +5,40 @@ import './styles/Drone.css';
 import droneModel from '../assets/3d/drone2.fbx';
 
 // Composant pour le modèle du drone avec animation
-function AnimatedDrone() {
+function AnimatedDrone({ zoomProgress = 0 }) {
   const groupRef = useRef();
   const fbx = useFBX(droneModel);
   const timeRef = useRef(0);
 
-  useFrame((state, delta) => {
+  // Scale de base + zoom progressif (de 1x à 1.7x)
+  const baseScale = 0.0025;
+  const zoomMultiplier = 0.9 + zoomProgress * 0.7; // 1 -> 1.7
+  const currentScale = baseScale * zoomMultiplier;
+
+  useFrame((_, delta) => {
     if (groupRef.current) {
       timeRef.current += delta;
-      
-      // Animation de flottement (mouvement vertical sinusoïdal) - réduit pour rester dans le cadre
+
+      // Animation de flottement (mouvement vertical sinusoïdal)
       const floatY = -1 + Math.sin(timeRef.current * 0.8) * 0.2;
       groupRef.current.position.y = floatY;
-      
-      // Légère oscillation horizontale - réduit pour rester dans le cadre
-      // Décalage de base vers la gauche (-0.5) + oscillation
+
+      // Légère oscillation horizontale
       const floatX = -1.5 + Math.cos(timeRef.current * 0.6) * 0.15;
       groupRef.current.position.x = floatX;
     }
   });
 
   return (
-    <group ref={groupRef} scale={[0.0025, 0.0025, 0.0025]} position={[-0.5, 0, 0]}>
+    <group ref={groupRef} scale={[currentScale, currentScale, currentScale]} position={[-0.5, 0, 0]}>
       <primitive object={fbx.clone()} />
     </group>
   );
 }
 
-const Drone = ({ isVisible = true }) => {
+const Drone = ({ isVisible = true, endScrollVh = 1.0 }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [extraScroll, setExtraScroll] = useState(0);
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const droneContainerRef = useRef(null);
 
@@ -52,11 +57,12 @@ const Drone = ({ isVisible = true }) => {
       // Structure de la page :
       // - Section 1 (DesktopScene) : fixed, occupe 0vh à 100vh (première viewport)
       // - Section 2 (Domain) : relative avec marginTop: 100vh, occupe 100vh à 200vh (deuxième viewport)
-      // Le drone doit se déplacer pendant la transition entre les deux sections
-      // Animation commence à 0vh (début de la page) et se termine à la fin de la section 2
+      // - Section 3 : troisième page
+      // Le drone doit se déplacer pendant la transition entre les deux PREMIERES sections seulement
+      // Animation commence à 0vh et se termine à endScrollVh
       const startScroll = 0; // Début de la page
-      // Utiliser la hauteur réelle du document ou 200vh, selon ce qui est le plus petit
-      const endScroll = Math.min(windowHeight * 2, documentHeight - windowHeight);
+      // S'arrete à  la position définie avec endScrollVh (1.15 = 115vh)
+      const endScroll = windowHeight * endScrollVh;
 
       // Calculer la progression (0 = position initiale en haut à droite, 1 = position finale en bas à gauche)
       let progress = 0;
@@ -77,6 +83,14 @@ const Drone = ({ isVisible = true }) => {
       console.log('Scroll Progress:', progress.toFixed(3), 'ScrollTop:', scrollTop.toFixed(1), 'WindowHeight:', windowHeight, 'DocumentHeight:', documentHeight, 'Start:', startScroll, 'End:', endScroll.toFixed(1));
 
       setScrollProgress(progress);
+
+      // Calcul du scroll apres la fin de l'animation
+      // Le drone remonte avec le contenu de la page
+      if (scrollTop > endScroll) {
+        setExtraScroll(scrollTop - endScroll);
+      } else {
+        setExtraScroll(0);
+      }
     };
 
     const handleResize = () => {
@@ -97,7 +111,7 @@ const Drone = ({ isVisible = true }) => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [endScrollVh]);
 
   // Position du drone responsives
   const isMobile = windowSize.width <= 768;
@@ -110,17 +124,19 @@ const Drone = ({ isVisible = true }) => {
 
   // Position deuxième page (au centre gauche)
   const position2 = {
-    top: isMobile ? windowSize.height * 0.5 : 90,
-    right: isMobile ? windowSize.width * 0.6 : windowSize.width * 0.45
+    top: isMobile ? 200 : 180,
+    right: isMobile ? windowSize.width * 0.3 : windowSize.width * 0.38
   };
 
-  const currentTop = position1.top + (position2.top - position1.top) * scrollProgress;
+  const baseTop = position1.top + (position2.top - position1.top) * scrollProgress;
+  const currentTop = baseTop - extraScroll;
   const currentRight = position1.right + (position2.right - position1.right) * scrollProgress;
   
-  // Calculer le scale : de 1 (taille normale) à 1.4 (40% plus grand)
-  const minScale = 1;
-  const maxScale = 1.4;
-  const currentScale = minScale + (maxScale - minScale) * scrollProgress;
+  // SCALE DÉSACTIVÉ POUR TESTTTTTTTT
+  // const minScale = 1;
+  // const maxScale = 1.4;
+  // const currentScale = minScale + (maxScale - minScale) * scrollProgress;
+  const currentScale = 1; // Taille fixe
 
   return (
     <>
@@ -153,7 +169,7 @@ const Drone = ({ isVisible = true }) => {
           transform: `scale(${currentScale})`,
           transformOrigin: 'center center',
           filter: isVisible ? 'blur(0px)' : 'blur(12px)',
-          transition: 'opacity 1s ease, filter 1s ease',
+          transition: 'opacity 0.5s ease, filter 0.5s ease',
           pointerEvents: isVisible ? 'auto' : 'none',
         }}
       >
@@ -164,7 +180,7 @@ const Drone = ({ isVisible = true }) => {
           <ambientLight intensity={0.8} />
           <directionalLight position={[5, 5, 5]} intensity={1} />
           <pointLight position={[-5, -5, -5]} intensity={0.5} />
-          <AnimatedDrone />
+          <AnimatedDrone zoomProgress={scrollProgress} />
         </Canvas>
       </div>
     </>

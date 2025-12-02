@@ -3,18 +3,19 @@
 .missions-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;    
+  min-height: 100vh;
   background-image:  url('../../assets/desktop/bgSection3.png');
-  background-position: 
-    center center,       
-    bottom center;       
-  background-size: 
-    cover,               
-    100% 100%;           
+  background-position:
+    center center,
+    bottom center;
+  background-size:
+    cover,
+    100% 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;  
+  padding: 4rem 2rem;
+  padding-top: 8rem;
 }
 
 .missions-container {
@@ -54,7 +55,7 @@
   position: relative;
   width: 100%;
   max-width: 900px;
-  height: 250px;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,21 +81,28 @@
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
+  overflow: visible;
 }
 
 .missions-carousel {
   width: 100%;
   position: relative;
+  overflow: visible !important;
 }
 
 .missions-carousel-content {
   display: flex;
   gap: 2rem;
+  overflow: visible !important;
 }
 
 .missions-carousel-item {
   min-width: 100%;
-  padding: 0 1rem;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .mission-card {
@@ -104,11 +112,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-height: 500px;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+  min-height: 400px;
   justify-content: center;
+  will-change: transform;
 }
 
 .mission-card:hover {
@@ -117,8 +126,8 @@
 }
 
 .mission-icon-wrapper {
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: var(--mission-color);
   background: linear-gradient(135deg, var(--mission-color), rgba(0, 0, 0, 0.2));
@@ -126,8 +135,9 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
   position: relative;
+  overflow: hidden;
 }
 
 .mission-icon-wrapper::before {
@@ -139,7 +149,7 @@
   height: 200%;
   background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transform: rotate(45deg);
-  transition: transform 0.5s ease;
+  transition: transform 0.6s ease;
 }
 
 .mission-card:hover .mission-icon-wrapper::before {
@@ -147,7 +157,7 @@
 }
 
 .mission-card:hover .mission-icon-wrapper {
-  transform: scale(1.1) rotate(5deg);
+  transform: scale(1.05);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -185,15 +195,16 @@
   width: 50px !important;
   height: 50px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  transition: all 0.3s ease !important;
+  transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease, background 0.3s ease !important;
   z-index: 10;
   color: #1e293b !important;
 }
 
 .missions-nav-button:hover:not(:disabled) {
   background: rgba(255, 255, 255, 1) !important;
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+  width: 58px !important;
+  height: 58px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
 }
 
 .missions-nav-button:disabled {
@@ -202,11 +213,11 @@
 }
 
 .missions-nav-prev {
-  left: -60px !important;
+  left: -150px !important;
 }
 
 .missions-nav-next {
-  right: -60px !important;
+  right: -150px !important;
 }
 
 .missions-indicators {
@@ -241,6 +252,126 @@
 }
 
 /* Responsive Design */
+
+/* Petits laptops (12-13 pouces, hauteur limitée) */
+@media (max-height: 800px) {
+  .missions-section {
+    padding-top: 1.5rem;
+  }
+  .mission-scotch-img {
+    width: 200px;
+  }
+  .missions-container {
+    gap: 1rem;
+  }
+
+  .missions-title {
+    font-size: 2rem;
+  }
+
+  .mission-paper {
+    height: 140px;
+    max-width: 800px;
+  }
+
+  .missions-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.8rem;
+  }
+
+  .mission-card {
+    min-height: 280px;
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+  }
+
+  .mission-icon-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .mission-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mission-title {
+    font-size: 1.3rem;
+  }
+
+  .mission-description {
+    font-size: 0.95rem;
+  }
+
+  .missions-indicators {
+    margin-top: 1rem;
+  }
+}
+
+/* Très petits écrans en hauteur (12 pouces) */
+@media (max-height: 700px) {
+  .missions-section {
+    padding-top: 1rem;
+  }
+
+  .missions-container {
+    gap: 0.75rem;
+  }
+
+  .missions-title {
+    font-size: 1.75rem;
+  }
+
+  .mission-paper {
+    height: 120px;
+    max-width: 550px;
+  }
+
+  .missions-subtitle {
+    font-size: 1rem;
+    line-height: 1.6rem;
+    width: 450px;
+  }
+
+  .mission-card {
+    min-height: 240px;
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .mission-icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .mission-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .mission-title {
+    font-size: 1.1rem;
+  }
+
+  .mission-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .missions-indicators {
+    margin-top: 0.75rem;
+  }
+
+  .missions-indicator {
+    width: 10px;
+    height: 10px;
+  }
+
+  .missions-indicator.active {
+    width: 24px;
+  }
+}
+
 @media (max-width: 1024px) {
   .missions-nav-prev {
     left: -40px !important;
@@ -266,7 +397,7 @@
 
   .missions-subtitle {
     font-size: 1rem;
-    width: auto;
+    width: 70%;
   }
 
   .mission-card {
