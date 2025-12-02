@@ -34,7 +34,12 @@
   text-align: center;
   color: #d8875c;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+
+  -webkit-text-stroke: 1px #1e293b;
+  text-shadow:
+    0 0 4px rgba(83, 81, 81, 0.4),
+    0 0 8px rgba(83, 81, 81, 0.4),
+    2px 2px 4px rgba(83, 81, 81, 0.4);
 }
 
 .missions-subtitle {
@@ -175,7 +180,7 @@
 }
 
 .mission-title {
-  font-size: 1.75rem;
+  font-size: 2.7rem;
   font-weight: 600;
   color: #1e293b;
   margin: 0;
@@ -266,7 +271,7 @@
   }
 
   .missions-title {
-    font-size: 2rem;
+    font-size: 2,7rem;
   }
 
   .mission-paper {

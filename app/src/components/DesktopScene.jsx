@@ -15,6 +15,7 @@ const DesktopScene = ({ onLoadingComplete }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const building1Ref = useRef(null);
   const building2Ref = useRef(null);
+  const grueRef = useRef(null);
 
     useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +45,8 @@ const DesktopScene = ({ onLoadingComplete }) => {
     if (shouldDisable()) {
       if (building1Ref.current) building1Ref.current.style.transform = "translate3d(0,0,0)";
       if (building2Ref.current) building2Ref.current.style.transform = "translate3d(0,0,0)";
+      if (grueRef.current) grueRef.current.style.transform = "translate3d(0,0,0)";
+
       return;
     }
 
@@ -63,6 +66,9 @@ const DesktopScene = ({ onLoadingComplete }) => {
         }
         if (building2Ref.current) {
           building2Ref.current.style.transform = `translate3d(${-tx}px, 0, 0)`;
+        }
+        if (grueRef.current) {
+          grueRef.current.style.transform = `translate3d(${tx}px, 0, 0)`;
         }
       });
     };
@@ -156,7 +162,7 @@ const DesktopScene = ({ onLoadingComplete }) => {
       <img src={cloudImage} alt="Cloud" className="cloud-asset" />
 
       {/* Grue Asset */}
-      <img src={grueImage} alt="Grue" className="grue-asset" />
+      <img ref={grueRef} src={grueImage} alt="Grue" className="grue-asset" />
 
 
 
