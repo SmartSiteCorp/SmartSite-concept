@@ -3,7 +3,8 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useFBX } from '@react-three/drei';
 import './styles/Drone.css';
 
-function droneModel() {
+// Composant pour charger le modèle FBX
+function DroneModel() {
   const fbx = useFBX(`${process.env.PUBLIC_URL}/3d/drone2.fbx`);
   return <primitive object={fbx} />;
 }
@@ -11,7 +12,7 @@ function droneModel() {
 // Composant pour le modèle du drone avec animation
 function AnimatedDrone({ zoomProgress = 0 }) {
   const groupRef = useRef();
-  const fbx = useFBX(droneModel);
+  const fbx = useFBX(`${process.env.PUBLIC_URL}/3d/drone2.fbx`);
   const timeRef = useRef(0);
 
   // Scale de base + zoom progressif (de 1x à 1.7x)
