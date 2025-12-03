@@ -8,7 +8,7 @@ import buildingbackImage from "../assets/desktop/buildingback.png";
 import cloudImage from "../assets/desktop/cloud.png";
 import grueImage from "../assets/desktop/grue.png";
 import "./styles/fonts.css"
-
+import SmartSiteLogo from "../assets/desktop/playButton.png";
 const DesktopScene = ({ onLoadingComplete }) => {
   const [isZoomedIn, setIsZoomedIn] = useState(true);
   const [showVRLoading, setShowVRLoading] = useState(true);
@@ -129,6 +129,7 @@ const DesktopScene = ({ onLoadingComplete }) => {
                 {/* Screen Content - Écran noir vide */}
                 <div className="screen-content">
                   <div className="screen-content-inner">
+                    <img src={SmartSiteLogo} alt="SmartSite Logo" className="smartsite-logo" />
                     {/* Écran vide/noir */}
                   </div>
                 </div>
