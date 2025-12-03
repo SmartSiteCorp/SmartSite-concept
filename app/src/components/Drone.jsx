@@ -1,18 +1,18 @@
 import { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
+import { useFBX } from '@react-three/drei';
 import './styles/Drone.css';
 
-// Composant pour charger le modèle GLB
+// Composant pour charger le modèle FBX
 function DroneModel() {
-  const gltf = useGLTF(`${process.env.PUBLIC_URL}/3d/drone2.glb`);
-  return <primitive object={gltf.scene} />;
+  const fbx = useFBX(`${process.env.PUBLIC_URL}/3d/drone2.fbx`);
+  return <primitive object={fbx} />;
 }
 
 // Composant pour le modèle du drone avec animation
 function AnimatedDrone({ zoomProgress = 0 }) {
   const groupRef = useRef();
-  const gltf = useGLTF(`${process.env.PUBLIC_URL}/3d/drone2.glb`);
+  const fbx = useFBX(`${process.env.PUBLIC_URL}/3d/drone2.fbx`);
   const timeRef = useRef(0);
 
   // Scale de base + zoom progressif (de 1x à 1.7x)
@@ -36,7 +36,7 @@ function AnimatedDrone({ zoomProgress = 0 }) {
 
   return (
     <group ref={groupRef} scale={[currentScale, currentScale, currentScale]} position={[-0.5, 0, 0]}>
-      <primitive object={gltf.scene.clone()} />
+      <primitive object={fbx.clone()} />
     </group>
   );
 }
