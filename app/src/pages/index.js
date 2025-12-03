@@ -4,9 +4,25 @@ import Domain from "components/Domain";
 import Drone from "components/Drone";
 import Missions from "components/Missions";
 import TuyauxDisplay from "components/Tuyaux";
+import BigMonitor from "components/BigMonitor"; 
+import video from "../assets/desktop/Smartsite_final.mp4";
 
 const Index = () => {
     const [isDroneReady, setIsDroneReady] = useState(false);
+    const [showBigMonitor, setShowBigMonitor] = useState(false); 
+      const [isBigMonitorClosing, setIsBigMonitorClosing] = useState(false);
+        const openBigMonitor = () => {
+    setIsBigMonitorClosing(false);
+    setShowBigMonitor(true);
+  };
+
+  const closeBigMonitor = () => {
+    setIsBigMonitorClosing(true);
+    setTimeout(() => {
+      setShowBigMonitor(false);
+      setIsBigMonitorClosing(false);
+    }, 200);
+    };
 
     return (
         <div className="relative w-full overflow-x-hidden">
@@ -19,8 +35,8 @@ const Index = () => {
             </div>
             {/* Section 2: Domain (affichée seulement après validation/fin du chargement) */}
             {isDroneReady && (
-                <div className="relative z-20" style={{ marginTop: '100vh' }}>
-                    <Domain />
+                <div className="relative z-20" style={{ marginTop: "100vh" }}>
+                <Domain onOpenBigMonitor={openBigMonitor} />
                 </div>
             )}
             {isDroneReady && (
@@ -36,6 +52,22 @@ const Index = () => {
                     <Missions />
                 </div>
             )}
+      {showBigMonitor && (
+        <div className="big-monitor-overlay" onClick={closeBigMonitor}>
+          <div
+            className="big-monitor-wrapper"
+            onClick={(e) => e.stopPropagation()}
+          >
+        <BigMonitor isClosing={isBigMonitorClosing}>
+        <video controls className="big-monitor-video">
+            <source src={video} type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+        </BigMonitor>
+          </div>
+        </div>
+      )}
+
         </div>
     );
 };

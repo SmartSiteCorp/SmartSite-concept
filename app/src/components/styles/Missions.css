@@ -65,6 +65,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
 }
 .mission-scotch-img {
   position: absolute;
@@ -75,6 +76,7 @@
   height: 50%;
   transform: translate(-50%, -50%) rotate(-20deg);
   z-index: 2;
+  pointer-events: none;
 }
 .mission-paper-img {
   top: 10%;

@@ -9,7 +9,7 @@ import "./styles/fonts.css";
 import ColorBends from "./ColorBends";
 import rockImage from "../assets/desktop/rock.png";
 import Tuyaux from "../assets/desktop/TuyauxDomains.png";
-
+import SmartSiteLogo from "../assets/desktop/playButton.png";
 const DOMAIN_COUNT = 3;
 
 // =========================
@@ -291,7 +291,7 @@ function Scene3D({ isMobile, activeIndex }) {
 // =========================
 // Composant principal Domain
 // =========================
-const Domain = () => {
+const Domain = ({ onOpenBigMonitor }) => {
   const rockRef = useRef(null);
   const monitorWrapperRef = useRef(null);
 
@@ -372,8 +372,9 @@ const Domain = () => {
 
             <div className="domain-monitor-frame">
               <div className="domain-monitor-bezel">
-                <div className="domain-monitor-screen">
-                  <div className="domain-monitor-screen-inner">
+                <div className="domain-monitor-screen" onClick={onOpenBigMonitor}>
+                  <div className="screen-content-inner">
+                    <img src={SmartSiteLogo} alt="SmartSite Logo" className="smartsite-logo" />
                     {/* Contenu à mettre dans l'écran si tu veux */}
                   </div>
                 </div>
@@ -447,6 +448,7 @@ const Domain = () => {
         </div>
               <img src={Tuyaux} alt="Tuyaux" className="tuyaux-domain" />
       </div>
+
     </section>
   );
 };
