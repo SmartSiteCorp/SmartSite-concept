@@ -5,7 +5,6 @@ import Drone from "components/Drone";
 import Missions from "components/Missions";
 import TuyauxDisplay from "components/Tuyaux";
 import BigMonitor from "components/BigMonitor"; 
-import video from "../assets/desktop/Smartsite_final.mp4";
 
 const Index = () => {
     const [isDroneReady, setIsDroneReady] = useState(false);
@@ -58,12 +57,18 @@ const Index = () => {
             className="big-monitor-wrapper"
             onClick={(e) => e.stopPropagation()}
           >
-        <BigMonitor isClosing={isBigMonitorClosing}>
-        <video controls className="big-monitor-video">
-            <source src={video} type="video/mp4" />
-            Your browser does not support the video tag.
-        </video>
-        </BigMonitor>
+<BigMonitor isClosing={isBigMonitorClosing}>
+  <iframe
+    className="big-monitor-video"
+    width="100%"
+    height="100%"
+    src="https://www.youtube.com/embed/O9C1s-G8-LM"
+    title="YouTube video"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</BigMonitor>
           </div>
         </div>
       )}
